@@ -11,21 +11,22 @@ if (typeof Web3Modal === 'undefined' || typeof ethers === 'undefined') {
 }
 
 async function connectWallet() {
-	const web3Modal = new Web3Modal.default({
-		network: "mainnet",
-		cacheProvider: false, // Optional
-		providerOptions: {} // Add provider options if needed
+	const Web3Modal = window.Web3Modal.default;
+	const web3Modal = new Web3Modal({
+		network: "mainnet", // optional
+		cacheProvider: true, // optional
+		providerOptions:{} // required
 	});
 
 	try {
-    await window.ethereum.request({
-      method: "wallet_requestPermissions",
-      params: [
-        {
-          eth_accounts: {},
-        },
-      ],
-    });
+    // await window.ethereum.request({
+    //   method: "wallet_requestPermissions",
+    //   params: [
+    //     {
+    //       eth_accounts: {},
+    //     },
+    //   ],
+    // });
 		const connection = await web3Modal.connect();
 		const pv = new ethers.BrowserProvider(connection);
 		const signer = pv.getSigner();
